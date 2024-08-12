@@ -1,0 +1,25 @@
+USE personadb;
+GO
+--  Para crear la tabla Clientes
+CREATE TABLE Clientes (
+    IdCliente INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre NVARCHAR(100) NOT NULL,
+    TipoIdentificacion NVARCHAR(50) NOT NULL,
+    NumeroIdentificacion NVARCHAR(50) UNIQUE NOT NULL,
+    Observaciones NVARCHAR(255)
+);
+GO
+
+-- Se crear la tabla Facturas
+CREATE TABLE Facturas (
+    IdFactura INT IDENTITY(1,1) PRIMARY KEY,
+    IdCliente INT NOT NULL,
+    Fecha DATE NOT NULL,
+    NombreProducto NVARCHAR(100) NOT NULL,
+    Precio DECIMAL(18, 2) NOT NULL,
+    ValorDescuento DECIMAL(5, 2) CHECK (ValorDescuento BETWEEN 0 AND 50) NOT NULL,
+    Iva DECIMAL(18, 2) NULL,
+    ValorTotal DECIMAL(18, 2) NULL,
+    FOREIGN KEY (IdCliente) REFERENCES Clientes(IdCliente)
+);
+GO
